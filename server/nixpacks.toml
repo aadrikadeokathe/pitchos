@@ -1,0 +1,5 @@
+[phases.build]
+cmds = ["npm install", "npx prisma generate"]
+
+[phases.deploy]
+cmd = "node index.js"

@@ -1,0 +1,104 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  sessions     Session[]
+}
+
+model Session {
+  id           String         @id @default(uuid())
+  userId       String
+  deckName     String
+  overallScore Float?
+  status       SessionStatus  @default(ANALYZING)
+  createdAt    DateTime       @default(now())
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slides       Slide[]
+  qaAreas      QAArea[]
+  qaMessages   QAMessage[]
+  report       Report?
+}
+
+enum SessionStatus {
+  ANALYZING
+  QA_PENDING
+  QA_IN_PROGRESS
+  COMPLETE
+}
+
+model Slide {
+  id        String        @id @default(uuid())
+  sessionId String
+  index     Int
+  title     String
+  rawText   String        @db.Text
+  session   Session       @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  analysis  SlideAnalysis?
+}
+
+model SlideAnalysis {
+  id          String   @id @default(uuid())
+  slideId     String   @unique
+  slideType   String
+  areaId      String
+  score       Float
+  verdict     String
+  issues      Json
+  suggestions Json
+  slide       Slide    @relation(fields: [slideId], references: [id], onDelete: Cascade)
+}
+
+model QAArea {
+  id             String     @id @default(uuid())
+  sessionId      String
+  areaId         String
+  status         AreaStatus @default(PENDING)
+  questionsAsked Int        @default(0)
+  finalVerdict   String?
+  session        Session    @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, areaId])
+}
+
+enum AreaStatus {
+  PENDING
+  IN_PROGRESS
+  COVERED
+  SKIPPED
+}
+
+model QAMessage {
+  id          String   @id @default(uuid())
+  sessionId   String
+  areaId      String
+  role        Role
+  content     String   @db.Text
+  aiVerdict   String?
+  createdAt   DateTime @default(now())
+  session     Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  ai
+  user
+}
+
+model Report {
+  id              String   @id @default(uuid())
+  sessionId       String   @unique
+  priorityActions Json
+  createdAt       DateTime @default(now())
+  session         Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}

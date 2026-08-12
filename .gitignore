@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Uploads (user files, not for git)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Build outputs
+client/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Prisma
+server/prisma/migrations/
+
+# Vite cache
+client/.vite/
