@@ -77,6 +77,12 @@ router.post('/', authenticate, upload.single('deck'), async (req, res) => {
       slideCount: session.slides.length,
       slides: session.slides.map((s) => ({ id: s.id, index: s.index, title: s.title })),
     });
+  } catch (err) {
+    console.error('Upload error:', err);
+    res.status(500).json({ error: err.message || 'Upload failed' });
+  }
+});
+
 // POST /api/upload/sample — Instant sample pitch deck for interviewers & testing
 router.post('/sample', authenticate, async (req, res) => {
   try {
