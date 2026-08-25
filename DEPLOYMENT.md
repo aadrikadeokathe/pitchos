@@ -68,6 +68,6 @@ Verify your backend is live by opening:
 Add these links to your resume under Projects:
 
 **PitchOS — AI-Powered Pitch Deck Analyzer & VC Coaching Platform**
-- **Live Demo**: `https://pitchos.vercel.app`
+- **Live Demo**: `https://pitchos2.vercel.app/`
 - **GitHub**: `https://github.com/aadrikadeokathe/pitchos`
 - **Tech Stack**: React, Vite, Node.js, Express, Prisma, MySQL, Google Gemini AI, Vercel, Render.

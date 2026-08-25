@@ -2,6 +2,9 @@
 
 > AI-powered pitch deck analyzer and VC mock Q&A coach.
 
+🚀 **Live Demo**: [https://pitchos2.vercel.app/](https://pitchos2.vercel.app/)
+⚡ **Interviewer 1-Click Access**: Click the "⚡ 1-Click Demo Mode" button on the live site to test instantly!
+
 ## Quick Start
 
 ### Prerequisites
