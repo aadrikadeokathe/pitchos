@@ -1,8 +1,12 @@
-# PitchOS
+# PitchOS 🚀
+
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://pitchos2.vercel.app/)
+[![GitHub Actions CI](https://img.shields.io/github/actions/workflow/status/aadrikadeokathe/pitchos/ci.yml?branch=main&label=CI%2FCD&style=for-the-badge&logo=github)](https://github.com/aadrikadeokathe/pitchos/actions)
+[![Release](https://img.shields.io/github/v/release/aadrikadeokathe/pitchos?style=for-the-badge&color=7c3aed)](https://github.com/aadrikadeokathe/pitchos/releases)
 
 > AI-powered pitch deck analyzer and VC mock Q&A coach.
 
-🚀 **Live Demo**: [https://pitchos2.vercel.app/](https://pitchos2.vercel.app/)
+🌐 **Live Demo**: [https://pitchos2.vercel.app/](https://pitchos2.vercel.app/)  
 ⚡ **Interviewer 1-Click Access**: Click the "⚡ 1-Click Demo Mode" button on the live site to test instantly!
 
 ## Quick Start
