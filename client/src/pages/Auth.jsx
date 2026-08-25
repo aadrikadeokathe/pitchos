@@ -11,7 +11,7 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { loginUser, user } = useAuth();
+  const { loginUser, loginDemo, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => { if (user) navigate('/dashboard'); }, [user]);
@@ -78,6 +78,23 @@ export default function Auth() {
               {loading ? <><div className="spinner" /> {mode === 'register' ? 'Creating account...' : 'Signing in...'}</> : <>{mode === 'register' ? 'Create Account' : 'Sign In'} <ArrowRight size={16} /></>}
             </button>
           </form>
+
+          <div style={{ marginTop: 20, paddingTop: 20, borderTop: '1px solid var(--border)', textAlign: 'center' }}>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 10 }}>Testing or reviewing for hiring?</p>
+            <button
+              id="auth-demo-btn"
+              type="button"
+              onClick={async () => {
+                setLoading(true);
+                await loginDemo();
+                navigate('/dashboard');
+              }}
+              className="btn btn-ghost w-full"
+              style={{ justifyContent: 'center', border: '1px solid rgba(124,58,237,0.3)', color: 'var(--accent-hi)', background: 'rgba(124,58,237,0.08)' }}
+            >
+              ⚡ 1-Click Demo Login (Instant Access)
+            </button>
+          </div>
         </div>
 
         <p style={{ textAlign: 'center', marginTop: 24, fontSize: '0.9rem', color: 'var(--text-muted)' }}>

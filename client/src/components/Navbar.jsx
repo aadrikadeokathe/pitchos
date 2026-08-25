@@ -3,10 +3,14 @@ import { useAuth } from '../context/AuthContext';
 import { LogOut, LayoutDashboard, Upload } from 'lucide-react';
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
+  const { user, loginDemo, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => { logout(); navigate('/'); };
+  const handleDemo = async () => {
+    await loginDemo();
+    navigate('/dashboard');
+  };
 
   return (
     <nav className="navbar">
@@ -27,6 +31,9 @@ export default function Navbar() {
             </>
           ) : (
             <>
+              <button onClick={handleDemo} className="btn btn-ghost btn-sm" style={{ color: 'var(--accent-hi)', border: '1px solid rgba(124,58,237,0.3)', background: 'rgba(124,58,237,0.08)' }}>
+                ⚡ Demo Mode
+              </button>
               <Link to="/auth" className="btn btn-ghost btn-sm">Sign In</Link>
               <Link to="/auth?mode=register" className="btn btn-primary btn-sm">Get Started</Link>
             </>

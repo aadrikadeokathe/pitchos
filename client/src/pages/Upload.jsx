@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
-import { uploadDeck, startAnalysis } from '../api';
-import { Upload as UploadIcon, FileText, X, CheckCircle, Loader, ArrowRight, AlertCircle } from 'lucide-react';
+import { uploadDeck, uploadSampleDeck, startAnalysis } from '../api';
+import { Upload as UploadIcon, FileText, X, CheckCircle, Loader, ArrowRight, AlertCircle, Sparkles } from 'lucide-react';
 
 export default function Upload() {
   const [file, setFile] = useState(null);
@@ -11,6 +11,21 @@ export default function Upload() {
   const [stage, setStage] = useState('idle'); // idle|uploading|segmenting|analyzing|error
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  const handleSampleSubmit = async () => {
+    setError('');
+    try {
+      setStage('segmenting');
+      const res = await uploadSampleDeck();
+      const { sessionId } = res.data;
+      setStage('analyzing');
+      await startAnalysis(sessionId);
+      navigate(`/analysis/${sessionId}`);
+    } catch (err) {
+      setStage('error');
+      setError(err.response?.data?.error || 'Failed to load sample deck');
+    }
+  };
 
   const onDrop = useCallback((accepted) => {
     const f = accepted[0];
@@ -48,10 +63,32 @@ export default function Upload() {
   return (
     <div className="page">
       <div className="container" style={{ maxWidth: 640 }}>
-        <div style={{ marginBottom: 40 }}>
+        <div style={{ marginBottom: 30 }}>
           <h2 style={{ marginBottom: 8 }}>Upload Your Deck</h2>
           <p>Drop in your pitch deck PDF. Gemini will segment and analyze it slide by slide.</p>
         </div>
+
+        {stage === 'idle' && (
+          <div style={{ marginBottom: 24, textAlign: 'center' }}>
+            <button
+              id="upload-sample-btn"
+              type="button"
+              onClick={handleSampleSubmit}
+              className="btn btn-ghost"
+              style={{
+                width: '100%',
+                justify: 'center',
+                border: '1px dashed rgba(124,58,237,0.4)',
+                background: 'rgba(124,58,237,0.08)',
+                color: 'var(--accent-hi)',
+                padding: '12px 16px',
+                borderRadius: 12
+              }}
+            >
+              <Sparkles size={16} /> Don't have a PDF? Test with Sample Deck (Fintech Series A)
+            </button>
+          </div>
+        )}
 
         {/* Dropzone */}
         <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`} id="deck-dropzone">

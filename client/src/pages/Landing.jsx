@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight, Zap, Target, MessageSquare, FileText, ChevronRight } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { ArrowRight, Zap, Target, MessageSquare, FileText, ChevronRight, Play } from 'lucide-react';
 
 const features = [
   { icon: Zap,           title: 'AI Slide Segmentation',   desc: 'Gemini reads your full deck and intelligently identifies every slide — even messy PDFs.' },
@@ -11,6 +12,14 @@ const features = [
 const areas = ['Problem Clarity','Market Sizing','Solution Differentiation','Revenue Logic','Go-To-Market','Traction & Validation','Team-Market Fit','Competitive Moat','The Ask'];
 
 export default function Landing() {
+  const { loginDemo } = useAuth();
+  const navigate = useNavigate();
+
+  const handleDemoLogin = async () => {
+    await loginDemo();
+    navigate('/dashboard');
+  };
+
   return (
     <div style={{ position: 'relative', minHeight: '100vh', paddingTop: 60 }}>
       {/* Hero */}
@@ -31,11 +40,13 @@ export default function Landing() {
           <p className="fade-up" style={{ animationDelay: '0.1s', fontSize: '1.15rem', maxWidth: 560, margin: '0 auto 40px', color: 'var(--text-muted)' }}>
             Upload your deck. Get grilled on every weak slide. Walk out with a structured report on exactly what to fix. Not a chatbot. A workflow.
           </p>
-          <div className="fade-up flex items-center gap-3" style={{ animationDelay: '0.15s', justifyContent: 'center' }}>
-            <Link to="/auth?mode=register" className="btn btn-primary btn-lg">
-              Analyze My Deck <ArrowRight size={18} />
+          <div className="fade-up flex items-center gap-3" style={{ animationDelay: '0.15s', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button onClick={handleDemoLogin} className="btn btn-primary btn-lg" style={{ background: 'linear-gradient(135deg, #7c3aed, #9333ea)', boxShadow: '0 4px 20px rgba(124,58,237,0.4)' }}>
+              ⚡ 1-Click Demo Mode (For Interviewers)
+            </button>
+            <Link to="/auth?mode=register" className="btn btn-ghost btn-lg">
+              Create Account <ArrowRight size={18} />
             </Link>
-            <Link to="/auth" className="btn btn-ghost btn-lg">Sign In</Link>
           </div>
         </div>
       </section>

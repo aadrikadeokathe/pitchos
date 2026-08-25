@@ -14,6 +14,7 @@ api.interceptors.request.use((config) => {
 // Auth
 export const register = (email, password) => api.post('/auth/register', { email, password });
 export const login = (email, password) => api.post('/auth/login', { email, password });
+export const loginDemo = () => api.post('/auth/demo');
 export const getMe = () => api.get('/auth/me');
 
 // Upload
@@ -26,6 +27,7 @@ export const uploadDeck = (file, deckName, onProgress) => {
     onUploadProgress: (e) => onProgress && onProgress(Math.round((e.loaded * 100) / e.total)),
   });
 };
+export const uploadSampleDeck = () => api.post('/upload/sample');
 
 // Analysis
 export const startAnalysis = (sessionId) => api.post(`/analyze/${sessionId}`);
